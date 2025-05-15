@@ -12,7 +12,10 @@ export const initialStore=()=>{
         title: "Do my homework",
         background: null,
       }
-    ]
+    ],
+    characters: [],
+    
+    urlBase : "https://swapi.tech/api"
   }
 }
 
@@ -25,6 +28,12 @@ export default function storeReducer(store, action = {}) {
       return {
         ...store,
         todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
+      };
+    
+    case "SET_PEOPLE":
+      return{
+        ...store, 
+        characters: action.payload
       };
     default:
       throw Error('Unknown action.');
