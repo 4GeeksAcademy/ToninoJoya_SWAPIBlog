@@ -15,5 +15,5 @@ export const getAllCharacters = async () => {
         } catch (error) {
             
         }
-    }
-
+    };
+    

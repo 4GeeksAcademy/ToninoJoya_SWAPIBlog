@@ -2,6 +2,8 @@
 import { useContext, useReducer, createContext, useEffect } from "react";
 import storeReducer, { initialStore } from "../store"  // Import the reducer and the initial state.
 import {getAllCharacters} from "../services/starWars"
+import { getAllPlanets } from "../services/planetWars";
+import { useActionData } from "react-router-dom";
 
 // Create a context to hold the global state of the application
 // We will call this global state the "store" to avoid confusion while using local states
@@ -24,10 +26,25 @@ export function StoreProvider({ children }) {
                 console.log(error)
             }
     }
+    const fetchPlanets = async () => {
+        try {
+            const dataPlanet = await getAllPlanets()
+            dispatch({
+                type: "SET_PLANETS",
+                payload: dataPlanet
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(()=>{
         fetchPeople()
+        fetchPlanets()
     }, [])
+
+
+
 
     // Provide the store and dispatch method to all child components.
     return <StoreContext.Provider value={{ store, dispatch }}>

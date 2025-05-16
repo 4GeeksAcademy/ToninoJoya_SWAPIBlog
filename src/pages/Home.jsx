@@ -11,8 +11,19 @@ export const Home = () => {
 
 	const { characters } = store
 
-	
-	
+	const handleOnClick = (characterId) => {
+
+		const personajeEncontrado = characters.find(character => character._id === characterId);
+		return (
+			dispatch({
+				type: "SET_FAVORITES",
+				payload: personajeEncontrado.properties.name 
+			})
+		);
+	}
+
+
+
 	return (
 		<>
 			<div className="container mt-5">
@@ -23,14 +34,17 @@ export const Home = () => {
 							return (
 								<>
 
-									<div className="card me-3 flex-shrink-0 p-4">
+									<div className="card me-3 flex-shrink-0"
+										key={item._id}>
 										<img src={rigoImageUrl} className="card-img-top" alt="Card Unica" />
-										<div className="card-body"></div>
-										<h5 className="card-title p-2">{item.properties.name}</h5>
-										<p className="card-text p-2">Gender: {item.properties.gender} <br /> Hair color: {item.properties.hair_color} <br /> Eye-color: {item.properties.eye_color} </p>
-										<div className="d-flex justify-content-between">
-											<a href="#" className="btn btn-outline-primary">Go somewhere </a><button type="button" className="btn btn-outline-warning"><i className="fa-regular fa-heart"></i></button>
+										<div className="card-body">
+											<h5 className="card-title">{item.properties.name}</h5>
+											<p className="card-text">Gender: {item.properties.gender} <br /> Hair color: {item.properties.hair_color} <br /> Eye-color: {item.properties.eye_color} </p>
+											<div className="d-flex justify-content-between">
+												<a href="#" className="btn btn-outline-primary">Learn more! </a><button type="button" className="btn btn-outline-warning" onClick={() => handleOnClick(item._id)}><i className="fa-regular fa-heart"></i></button>
+											</div>
 										</div>
+
 									</div>
 								</>
 							);

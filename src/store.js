@@ -14,7 +14,8 @@ export const initialStore=()=>{
       }
     ],
     characters: [],
-    
+    planets: [],
+    favorites: [], 
     urlBase : "https://swapi.tech/api"
   }
 }
@@ -35,6 +36,22 @@ export default function storeReducer(store, action = {}) {
         ...store, 
         characters: action.payload
       };
+
+    case "SET_PLANETS":
+      return{
+        ...store,
+        planets: action.payload
+      }
+    case "SET_FAVORITES":
+      return{
+        ...store, 
+        favorites: [...store.favorites, action.payload]
+      }
+    case "DELETE_FAVORITES":
+      return{
+        ...store,
+        favorites: store.favorites.filter((item, index) => index !== action.payload)
+      }
     default:
       throw Error('Unknown action.');
   }    
