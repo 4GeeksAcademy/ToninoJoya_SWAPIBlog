@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import { Planets } from "../components/Planets.jsx";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { Link } from "react-router-dom";
 
 
 
@@ -13,7 +14,7 @@ export const Home = () => {
 
 	const handleOnClick = (characterId) => {
 
-		const personajeEncontrado = characters.find(character => character._id === characterId);
+		const personajeEncontrado = characters.find(character => character._id == characterId);
 		return (
 			dispatch({
 				type: "SET_FAVORITES",
@@ -36,18 +37,18 @@ export const Home = () => {
 
 									<div className="card me-3 flex-shrink-0"
 										key={item._id}>
-										<img src={rigoImageUrl} className="card-img-top" alt="Card Unica" />
+										<img src={`https://raw.githubusercontent.com/breatheco-de/swapi-images/refs/heads/master/public/images/people/${item.uid}.jpg`} className="card-img-top" alt="Card Unica" />
 										<div className="card-body">
 											<h5 className="card-title">{item.properties.name}</h5>
 											<p className="card-text">Gender: {item.properties.gender} <br /> Hair color: {item.properties.hair_color} <br /> Eye-color: {item.properties.eye_color} </p>
 											<div className="d-flex justify-content-between">
-												<a href="#" className="btn btn-outline-primary">Learn more! </a><button type="button" className="btn btn-outline-warning" onClick={() => handleOnClick(item._id)}><i className="fa-regular fa-heart"></i></button>
+												<Link to={`/details/${item.uid}`} className="btn btn-outline-primary">Learn more! </Link><button type="button" className="btn btn-outline-warning" onClick={() => handleOnClick(item._id)}><i className="fa-regular fa-heart"></i></button>
 											</div>
 										</div>
 
 									</div>
 								</>
-							);
+							)
 						})
 					};
 				</div>

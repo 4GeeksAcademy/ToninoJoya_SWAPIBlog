@@ -26,10 +26,10 @@ export const Navbar = () => {
 				<div className="ml-auto">
 					<div className="dropdown">
 						<button className="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-							Favorites {favorites.length}
+							Favorites <span className="badge text-bg-secondary">{favorites.length}</span> 
 						</button>
 						<ul className="dropdown-menu">
-							{
+							{ favorites.length == 0 ?   <li className="text-center">(empty)</li>:
 								favorites.map((item, index) => {
 									return (<li className="p-2 d-flex justify-content-between"
 												key={index}>{item}
