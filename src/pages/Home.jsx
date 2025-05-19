@@ -11,16 +11,27 @@ export const Home = () => {
 
 	const { characters, favorites } = store
 
-	const handleOnClick = (characterId) => {
+const handleOnClick = (characterId) => {
 
-		const personajeEncontrado = characters.find(character => character._id == characterId);
-		return (
-			dispatch({
-				type: "SET_FAVORITES",
-				payload: personajeEncontrado.properties.name 
-			})
-		);
-	}
+    const personajeEncontrado = characters.find(character => character._id == characterId); 
+
+    const nombreDelPersonaje = personajeEncontrado.properties.name;
+
+    const estaEnFavoritos = store.favorites.includes(nombreDelPersonaje);
+
+    let nuevaListaDeFavoritos;
+
+    if (estaEnFavoritos) {
+        nuevaListaDeFavoritos = store.favorites.filter(fav => fav !== nombreDelPersonaje);
+    } else {
+        nuevaListaDeFavoritos = [...store.favorites, nombreDelPersonaje];
+    }
+    dispatch({
+        type: "SET_FAVORITES",
+        payload: nuevaListaDeFavoritos
+    });
+
+};
 
 
 
@@ -36,7 +47,7 @@ export const Home = () => {
 
 									<div className="card me-3 flex-shrink-0"
 										key={item._id}>
-										<img src={`https://raw.githubusercontent.com/breatheco-de/swapi-images/refs/heads/master/public/images/people/${item.uid}.jpg`} className="card-img-top" alt="Card Unica" />
+										<img src={`https://raw.githubusercontent.com/breatheco-de/swapi-images/refs/heads/master/public/images/people/${item.uid}.jpg`} className="card-img-top" alt={item.properties.name} />
 										<div className="card-body">
 											<h5 className="card-title">{item.properties.name}</h5>
 											<p className="card-text">Gender: {item.properties.gender} <br /> Hair color: {item.properties.hair_color} <br /> Eye-color: {item.properties.eye_color} </p>

@@ -45,7 +45,7 @@ export default function storeReducer(store, action = {}) {
     case "SET_FAVORITES":
       return{
         ...store, 
-        favorites: [...store.favorites, action.payload]
+        favorites:  action.payload
       }
     case "DELETE_FAVORITES":
       return{

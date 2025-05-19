@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
+
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import { Link } from "react-router-dom";
 
@@ -9,16 +8,27 @@ export const Planets = () => {
 
     const { planets } = store
 
-    const handleOnClick = (planetaId) => {
+     const handleOnClick = (planetaId) => {
+        const planetaEncontrado = planets.find(planeta => planeta._id == planetaId);
+        
+        const nombreDelPlaneta = planetaEncontrado.properties.name;
 
-		const planetaEncontrado = planets.find(planeta => planeta._id == planetaId);
-		return (
-			dispatch({
-				type: "SET_FAVORITES",
-				payload: planetaEncontrado.properties.name 
-			})
-		);
-	}
+        const estaEnFavoritos = store.favorites.includes(nombreDelPlaneta);
+
+        let nuevaListaDeFavoritos;
+
+        if (estaEnFavoritos) {
+            nuevaListaDeFavoritos = store.favorites.filter(fav => fav !== nombreDelPlaneta);
+        } else {
+            nuevaListaDeFavoritos = [...store.favorites, nombreDelPlaneta];
+        }
+        
+        dispatch({
+            type: "SET_FAVORITES",
+            payload: nuevaListaDeFavoritos
+        });
+    };
+
     return (
         <div className="container mt-5">
             <h2 className="text-danger">Planets</h2>
@@ -27,7 +37,7 @@ export const Planets = () => {
                     planets.map((item) => {
                         return (
                             <div className="card me-3 flex-shrink-0">
-                                <img src={`https://raw.githubusercontent.com/breatheco-de/swapi-images/refs/heads/master/public/images/planets/${item.uid}.jpg`} className="card-img-top" alt="Card Unica" />
+                                <img src={`https://raw.githubusercontent.com/breatheco-de/swapi-images/refs/heads/master/public/images/planets/${item.uid}.jpg`} className="card-img-top" alt={item.properties.name} />
                                 <div className="card-body">
                                     <h5 className="card-title">{item.properties.name}</h5>
                                     <p className="card-text">Population: {item.properties.population} <br />Terrain: {item.properties.terrain}</p>
