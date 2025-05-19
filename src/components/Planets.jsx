@@ -34,7 +34,11 @@ export const Planets = () => {
                                     <div className="d-flex justify-content-between">
                                         <Link to={`/planetsDetails/${item.uid}`} className="btn btn-outline-primary">Learn more! </Link>
                                         <button type="button" className="btn btn-outline-warning"
-                                        onClick={()=>handleOnClick(item._id)}><i className="fa-regular fa-heart"></i></button>
+                                        onClick={()=>handleOnClick(item._id)}>{
+														store.favorites.includes(item.properties.name)?
+														<i className="fa-solid fa-heart"></i>:<i className="fa-regular fa-heart"></i>
+
+													}</button>
                                     </div>
                                 </div>
 
